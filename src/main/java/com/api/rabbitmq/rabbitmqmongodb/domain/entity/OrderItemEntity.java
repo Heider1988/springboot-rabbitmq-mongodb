@@ -19,6 +19,4 @@ public class OrderItemEntity {
     private BigDecimal price;
 
 
-
-
 }
