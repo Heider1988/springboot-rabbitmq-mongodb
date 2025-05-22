@@ -1,5 +1,6 @@
 package com.api.rabbitmq.rabbitmqmongodb.controller;
 
+import com.api.rabbitmq.rabbitmqmongodb.doc.OrderControllerDoc;
 import com.api.rabbitmq.rabbitmqmongodb.dto.response.ApiResponse;
 import com.api.rabbitmq.rabbitmqmongodb.dto.response.OrderResponse;
 import com.api.rabbitmq.rabbitmqmongodb.dto.response.PaginationResponse;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class OrderController {
+public class OrderController implements OrderControllerDoc {
 
     final OrderService orderService;
 
@@ -24,8 +25,10 @@ public class OrderController {
     }
 
     @GetMapping("/customs/{customerId}/orders")
-    public ResponseEntity<ApiResponse<OrderResponse>> listOrders(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                                                                 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, @PathVariable Long customerId) {
+    public ResponseEntity<ApiResponse<OrderResponse>> listOrders(
+        @RequestParam(name = "page", defaultValue = "0") Integer page,
+        @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, 
+        @PathVariable Long customerId) {
 
         var pageResponse = orderService.findAllByCustomerId(customerId, PageRequest.of(page, pageSize));
         var totalOrders = orderService.totalOnOrdersByCustomerId(customerId);
